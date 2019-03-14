@@ -54,4 +54,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Modifying
     @Query(value = "update user set email = ?2 where id = ?1",nativeQuery = true)
     void updateEmail(Long id, String email);
+
+    /**
+     * findByPhone
+     * @param phone
+     * @return
+     */
+    User findByPhone(String phone);
 }

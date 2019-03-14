@@ -24,8 +24,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author jie
- * @date 2018-11-22
+ * @author wuyd
+ * @date 2019-03-14
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -46,6 +46,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         User user = null;
         if(ValidationUtil.isEmail(username)){
             user = userRepository.findByEmail(username);
+        }else if(ValidationUtil.isPhoneNumber(username)){
+            user = userRepository.findByPhone(username);
         } else {
             user = userRepository.findByUsername(username);
         }
