@@ -1,19 +1,8 @@
-# eladmin
+# 表白墙
 
 项目基于 Spring Boot 2.1.0 、 Spring boot Jpa、 Spring Security、redis、Vue的前后端分离的权限管理系统，项目采用分模块开发方式， 权限控制采用 RBAC（Role-Based Access Control，基于角色的访问控制），前端菜单支持动态路由
 
-#### 前端源码
-eladmin-qt和eladmin-qd只是命名方式的区别，无其他区别
-- 码云：[https://gitee.com/elunez/eladmin-qt](https://gitee.com/elunez/eladmin-qt)
-- github：[https://github.com/elunez/eladmin-qd](https://github.com/elunez/eladmin-qd)
-
-#### eladmin开发文档
-[http://docs.auauz.net/#/](http://docs.auauz.net/#/)
-
-#### 预览地址
-[http://auauz.net](http://auauz.net)
-
-##### 用户账号密码
+##### 用户账号密码````
 
 - 管理员： admin
 - 测试用户： test
@@ -47,22 +36,17 @@ eladmin-qt和eladmin-qd只是命名方式的区别，无其他区别
     - 邮件工具 配合富文本，发送html格式的邮件
     - SM.MS免费图床 挺好用的一个图床，作为公共图片上传使用
     - 七牛云存储 这个就不多说了
-    - 支付宝支付 提供了测试账号，可自行测试
-- 组件管理
-    - 图标库 系统图标来自 https://www.iconfont.cn/
-    - 富文本 集成wangEditor富文本
-```
 #### 项目结构
 ```
 # 项目模块如下
-- eladmin-common 公共模块
+- bbq-common 公共模块
     - aop.limit 接口限流自定义注解
     - exception 项目统一异常的处理
     - mapper mapstruct的通用mapper
     - redis redis缓存相关配置
     - swagger2 接口文档配置
     - utils 通用工具
-- eladmin-system 系统核心模块
+- bbq-system 系统核心模块
 	- config 配置跨域与静态资源
 	- modules 系统相关模块
 		- monitor 系统监控
@@ -81,9 +65,8 @@ eladmin-qt和eladmin-qd只是命名方式的区别，无其他区别
 		    - service 用户登录与权限的处理
 		    - utils JWT工具
     	- system 系统管理
-- eladmin-logging 系统日志模块
-- eladmin-tools 系统第三方工具模块
-- eladmin-generator 系统代码生成模块
+- bbq-logging 系统日志模块
+- bbq-tools 系统第三方工具模块
 ```
 #### 后端技术栈
 
@@ -102,28 +85,7 @@ eladmin-qt和eladmin-qd只是命名方式的区别，无其他区别
 - axios
 - element ui
 
-#### 系统预览
-<table>
-    <tr>
-        <td><img src="https://i.loli.net/2018/12/22/5c1e10c781eec.png"/></td>
-        <td><img src="https://i.loli.net/2018/12/22/5c1e10c7890ab.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://i.loli.net/2019/02/28/5c7795b707347.png"/></td>
-        <td><img src="https://i.loli.net/2018/12/22/5c1e10c7b089b.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://i.loli.net/2018/12/22/5c1e10c7b9c30.png"/></td>
-        <td><img src="https://i.loli.net/2018/12/22/5c1e10c7b7504.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://i.loli.net/2018/12/22/5c1e10c7a9f7d.png"/></td>
-		<td><img src="https://i.imgur.com/FzVaAlS.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://i.imgur.com/ah3X2HG.png"/></td>
-    </tr>
-</table>
+
 
 #### 反馈交流
 

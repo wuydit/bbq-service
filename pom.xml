@@ -4,20 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.zhengjie</groupId>
-    <artifactId>eladmin</artifactId>
+    <groupId>org.wuyd</groupId>
+    <artifactId>bbq-service</artifactId>
     <packaging>pom</packaging>
     <version>1.5</version>
 
     <modules>
-        <module>eladmin-common</module>
-        <module>eladmin-logging</module>
-        <module>eladmin-system</module>
-        <module>eladmin-tools</module>
-        <module>eladmin-generator</module>
+        <module>bbq-common</module>
+        <module>bbq-logging</module>
+        <module>bbq-system</module>
+        <module>bbq-tools</module>
     </modules>
 
-    <name>el-admin</name>
+    <name>bbq</name>
     <url>http://auauz.net</url>
 
     <parent>
