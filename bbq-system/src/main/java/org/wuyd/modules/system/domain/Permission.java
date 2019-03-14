@@ -1,6 +1,7 @@
 package org.wuyd.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,12 +13,13 @@ import java.sql.Timestamp;
 import java.util.Set;
 
 /**
- * @author jie
- * @date 2018-12-03
+ * @author wuyd
+ * @date 2019-03-13
  */
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 @Table(name = "permission")
 public class Permission implements Serializable{
 

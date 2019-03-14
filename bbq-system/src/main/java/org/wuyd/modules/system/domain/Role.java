@@ -1,6 +1,7 @@
 package org.wuyd.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,6 +22,7 @@ import java.util.Set;
 @Table(name = "role")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Role implements Serializable {
 
     @Id
