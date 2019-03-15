@@ -1,5 +1,6 @@
 package org.wuyd.modules.system.service;
 
+import org.wuyd.modules.bbq.service.dto.RegisterDTO;
 import org.wuyd.modules.system.domain.User;
 import org.wuyd.modules.security.security.JwtUser;
 import org.wuyd.modules.system.service.dto.UserDTO;
@@ -75,4 +76,11 @@ public interface UserService {
      */
     @CacheEvict(allEntries = true)
     void updateEmail(JwtUser jwtUser, String email);
+
+    /**
+     * bbq 注册
+     * @param register
+     */
+    @CacheEvict(allEntries = true)
+    void register(RegisterDTO register);
 }

@@ -1,5 +1,6 @@
 package org.wuyd.modules.system.service.impl;
 
+import org.wuyd.modules.bbq.service.dto.RegisterDTO;
 import org.wuyd.modules.system.domain.User;
 import org.wuyd.exception.BadRequestException;
 import org.wuyd.exception.EntityExistException;
@@ -135,5 +136,15 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public void updateEmail(JwtUser jwtUser, String email) {
         userRepository.updateEmail(jwtUser.getId(),email);
+    }
+
+    @Override
+    public void register(RegisterDTO register) {
+        User user = new User();
+        user.setAvatar(register.getAvatar());
+        user.setEmail(register.getEmail());
+        user.setPassword(register.getPassword());
+        user.setUsername(register.getUsername());
+        userRepository.save(user);
     }
 }

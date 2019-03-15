@@ -66,6 +66,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                 user.getPassword(),
                 user.getAvatar(),
                 user.getEmail(),
+                user.getPhone(),
                 mapToGrantedAuthorities(roleRepository.findByUsers_Id(user.getId()),permissionRepository),
                 user.getEnabled(),
                 user.getCreateTime(),
@@ -77,8 +78,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         Set<Permission> permissions = new HashSet<>();
         for (Role role : roles) {
-            Set<Role> roleSet = new HashSet<>();
-            roleSet.add(role);
+//            Set<Role> roleSet = new HashSet<>();
+//            roleSet.add(role);
             permissions.addAll(permissionRepository.findByRoles_Id(role.getId()));
         }
 

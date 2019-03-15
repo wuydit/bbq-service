@@ -1,9 +1,9 @@
 package org.wuyd.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -22,7 +23,8 @@ import java.util.Set;
 @Table(name = "role")
 @Getter
 @Setter
-@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role implements Serializable {
 
     @Id
@@ -62,6 +64,5 @@ public class Role implements Serializable {
                 ", createDateTime=" + createTime +
                 '}';
     }
-
     public interface Update{}
 }

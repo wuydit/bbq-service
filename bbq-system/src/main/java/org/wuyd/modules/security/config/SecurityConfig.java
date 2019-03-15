@@ -94,6 +94,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
                 .antMatchers("/websocket/**").permitAll()
                 .antMatchers("/druid/**").anonymous()
+                //放开email 发送权限
+                .antMatchers( HttpMethod.POST,"/api/email").permitAll()
+                //bbq start
+                .antMatchers( HttpMethod.POST,"/bbq/register").permitAll()
+               // .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
+               // .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
+                //bbq end
 
                 // swagger start
                 .antMatchers("/swagger-ui.html").anonymous()

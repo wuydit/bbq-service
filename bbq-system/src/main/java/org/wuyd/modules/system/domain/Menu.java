@@ -1,7 +1,9 @@
 package org.wuyd.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
@@ -19,6 +21,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "menu")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Menu implements Serializable {
 
     @Id

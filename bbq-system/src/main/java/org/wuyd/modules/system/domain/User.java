@@ -1,8 +1,9 @@
 package org.wuyd.modules.system.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +22,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name="user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable {
 
     @Id
@@ -63,6 +66,7 @@ public class User implements Serializable {
                 ", username='" + username + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
                 ", enabled=" + enabled +
                 ", password='" + password + '\'' +
                 ", createTime=" + createTime +

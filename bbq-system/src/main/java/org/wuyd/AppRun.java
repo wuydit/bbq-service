@@ -1,5 +1,6 @@
 package org.wuyd;
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import org.wuyd.utils.SpringContextHolder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

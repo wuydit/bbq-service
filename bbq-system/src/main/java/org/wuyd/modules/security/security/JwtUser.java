@@ -30,6 +30,8 @@ public class JwtUser implements UserDetails {
 
     private final String email;
 
+    private final String phone;
+
     @JsonIgnore
     private final Collection<? extends GrantedAuthority> authorities;
 
