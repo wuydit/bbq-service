@@ -1,6 +1,5 @@
 package org.wuyd;
 
-import com.alibaba.fastjson.parser.ParserConfig;
 import org.wuyd.utils.SpringContextHolder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
 /**
- * @author jie
+ * @author wuyd
  * @date 2018/11/15 9:20:19
  */
 @SpringBootApplication
