@@ -35,6 +35,4 @@ public class UserDTO implements Serializable {
 
     private Date lastPasswordResetTime;
 
-    @ApiModelProperty(hidden = true)
-    private Set<RoleDTO> roles;
 }

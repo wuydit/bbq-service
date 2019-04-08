@@ -97,8 +97,6 @@ public class RedisConfig extends CachingConfigurerSupport {
         ParserConfig.getGlobalInstance().addAccept("org.wuyd.domain");
         ParserConfig.getGlobalInstance().addAccept("org.wuyd.modules.system.service.dto");
         ParserConfig.getGlobalInstance().addAccept("org.wuyd.modules.system.domain");
-        ParserConfig.getGlobalInstance().addAccept("org.wuyd.modules.quartz.domain");
-        ParserConfig.getGlobalInstance().addAccept("org.wuyd.modules.monitor.domain");
         ParserConfig.getGlobalInstance().addAccept("org.wuyd.modules.security.security");
         // key的序列化采用StringRedisSerializer
         template.setKeySerializer(new StringRedisSerializer());

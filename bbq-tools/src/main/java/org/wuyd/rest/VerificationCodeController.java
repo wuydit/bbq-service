@@ -4,7 +4,7 @@ import org.wuyd.domain.VerificationCode;
 import org.wuyd.domain.vo.EmailVo;
 import org.wuyd.service.EmailService;
 import org.wuyd.service.VerificationCodeService;
-import org.wuyd.utils.ElAdminConstant;
+import org.wuyd.utils.BbqConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class VerificationCodeController {
 
     @PostMapping(value = "/code/resetEmail")
     public ResponseEntity resetEmail(@RequestBody VerificationCode code) throws Exception {
-        code.setScenes(ElAdminConstant.RESET_MAIL);
+        code.setScenes(BbqConstant.RESET_MAIL);
         EmailVo emailVo = verificationCodeService.sendEmail(code);
         emailService.send(emailVo,emailService.find());
         return new ResponseEntity(HttpStatus.OK);
@@ -43,7 +43,7 @@ public class VerificationCodeController {
         VerificationCode code = new VerificationCode();
         code.setType("email");
         code.setValue(email);
-        code.setScenes(ElAdminConstant.RESET_MAIL);
+        code.setScenes(BbqConstant.RESET_MAIL);
         EmailVo emailVo = verificationCodeService.sendEmail(code);
         emailService.send(emailVo,emailService.find());
         return new ResponseEntity(HttpStatus.OK);

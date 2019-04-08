@@ -56,9 +56,6 @@ public class UserServiceImpl implements UserService {
             throw new EntityExistException(User.class,"email",resources.getEmail());
         }
 
-        if(resources.getRoles() == null || resources.getRoles().size() == 0){
-            throw new BadRequestException("角色不能为空");
-        }
 
         // 默认密码 123456，此密码是 MD5加密后的字符
         resources.setPassword("14e1b600b1fd579f47433b88e8d85291");
@@ -78,9 +75,6 @@ public class UserServiceImpl implements UserService {
         User user1 = userRepository.findByUsername(user.getUsername());
         User user2 = userRepository.findByEmail(user.getEmail());
 
-        if(resources.getRoles() == null || resources.getRoles().size() == 0){
-            throw new BadRequestException("角色不能为空");
-        }
 
         if(user1 !=null&&!user.getId().equals(user1.getId())){
             throw new EntityExistException(User.class,"username",resources.getUsername());
@@ -93,8 +87,6 @@ public class UserServiceImpl implements UserService {
         user.setUsername(resources.getUsername());
         user.setEmail(resources.getEmail());
         user.setEnabled(resources.getEnabled());
-        user.setRoles(resources.getRoles());
-
         userRepository.save(user);
     }
 

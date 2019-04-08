@@ -55,10 +55,6 @@ public class User implements Serializable {
     @Column(name = "last_password_reset_time")
     private Date lastPasswordResetTime;
 
-    @ManyToMany
-    @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
-    private Set<Role> roles;
-
     @Override
     public String toString() {
         return "User{" +
