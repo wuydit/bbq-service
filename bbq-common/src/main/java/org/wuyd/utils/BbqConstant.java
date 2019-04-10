@@ -5,7 +5,7 @@ package org.wuyd.utils;
  * @author jie
  * @date 2018-12-26
  */
-public class ElAdminConstant {
+public class BbqConstant {
 
     public static final String RESET_PASS = "重置密码";
 

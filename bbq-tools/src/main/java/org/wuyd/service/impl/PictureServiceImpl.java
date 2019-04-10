@@ -9,7 +9,7 @@ import org.wuyd.domain.Picture;
 import org.wuyd.exception.BadRequestException;
 import org.wuyd.repository.PictureRepository;
 import org.wuyd.service.PictureService;
-import org.wuyd.utils.ElAdminConstant;
+import org.wuyd.utils.BbqConstant;
 import org.wuyd.utils.FileUtil;
 import org.wuyd.utils.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class PictureServiceImpl implements PictureService {
         HashMap<String, Object> paramMap = new HashMap<>();
 
         paramMap.put("smfile", file);
-        String result= HttpUtil.post(ElAdminConstant.Url.SM_MS_URL, paramMap);
+        String result= HttpUtil.post(BbqConstant.Url.SM_MS_URL, paramMap);
 
         JSONObject jsonObject = JSONUtil.parseObj(result);
         Picture picture = null;

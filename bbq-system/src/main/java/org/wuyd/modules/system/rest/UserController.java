@@ -8,7 +8,7 @@ import org.wuyd.exception.BadRequestException;
 import org.wuyd.modules.security.security.JwtUser;
 import org.wuyd.service.PictureService;
 import org.wuyd.service.VerificationCodeService;
-import org.wuyd.utils.ElAdminConstant;
+import org.wuyd.utils.BbqConstant;
 import org.wuyd.utils.EncryptUtils;
 import org.wuyd.modules.security.utils.JwtTokenUtil;
 import org.wuyd.modules.system.service.UserService;
@@ -153,7 +153,7 @@ public class UserController {
         if(!jwtUser.getPassword().equals(EncryptUtils.encryptPassword(user.getPassword()))){
             throw new BadRequestException("密码错误");
         }
-        VerificationCode verificationCode = new VerificationCode(code, ElAdminConstant.RESET_MAIL,"email",user.getEmail());
+        VerificationCode verificationCode = new VerificationCode(code, BbqConstant.RESET_MAIL,"email",user.getEmail());
         verificationCodeService.validated(verificationCode);
         userService.updateEmail(jwtUser,user.getEmail());
         return new ResponseEntity(HttpStatus.OK);

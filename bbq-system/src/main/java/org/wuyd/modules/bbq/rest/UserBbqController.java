@@ -16,7 +16,7 @@ import org.wuyd.modules.system.service.UserService;
 import org.wuyd.modules.system.service.query.UserQueryService;
 import org.wuyd.service.PictureService;
 import org.wuyd.service.VerificationCodeService;
-import org.wuyd.utils.ElAdminConstant;
+import org.wuyd.utils.BbqConstant;
 
 /**
  * @author jie
@@ -59,7 +59,7 @@ public class UserBbqController {
         if("".equals(register.getCode())){
             throw new BadRequestException("缺少验证码");
          }
-        VerificationCode verificationCode = new VerificationCode(register.getCode(), ElAdminConstant.RESET_MAIL,"email",register.getEmail());
+        VerificationCode verificationCode = new VerificationCode(register.getCode(), BbqConstant.RESET_MAIL,"email",register.getEmail());
         verificationCodeService.validated(verificationCode);
         userService.register(register);
         return new ResponseEntity(HttpStatus.OK);

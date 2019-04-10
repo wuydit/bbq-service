@@ -71,7 +71,4 @@ public class JwtUser implements UserDetails {
         return enabled;
     }
 
-    public Collection getRoles() {
-        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
-    }
 }

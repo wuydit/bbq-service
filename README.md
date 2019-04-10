@@ -53,7 +53,6 @@
 	- config 配置跨域与静态资源
 	- modules 系统相关模块
 		- monitor 系统监控
-		    - config 配置日志拦截器与WebSocket等
 		    - domain 实体类
 		    - repository 数据库操作
 		    - rest 前端控制器
