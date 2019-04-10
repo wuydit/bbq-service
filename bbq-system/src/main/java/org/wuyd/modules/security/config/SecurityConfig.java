@@ -111,10 +111,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 接口限流测试
                 .antMatchers("/test/**").anonymous()
-                .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
+                .antMatchers(HttpMethod.OPTIONS, "/**").anonymous();
 
                 // 所有请求都需要认证
-                .anyRequest().authenticated();
+               // .anyRequest().authenticated();
 
         httpSecurity
                 .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

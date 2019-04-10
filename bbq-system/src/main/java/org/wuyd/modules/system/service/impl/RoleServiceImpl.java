@@ -74,7 +74,6 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateMenu(Role resources, RoleDTO roleDTO) {
         Role role = roleMapper.toEntity(roleDTO);
-        role.setMenus(resources.getMenus());
         roleRepository.save(role);
     }
 

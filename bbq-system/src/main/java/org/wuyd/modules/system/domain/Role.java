@@ -47,9 +47,6 @@ public class Role implements Serializable {
     @JoinTable(name = "roles_permissions", joinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id",referencedColumnName = "id")})
     private Set<Permission> permissions;
 
-    @ManyToMany
-    @JoinTable(name = "roles_menus", joinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "menu_id",referencedColumnName = "id")})
-    private Set<Menu> menus;
 
     @CreationTimestamp
     @Column(name = "create_time")
