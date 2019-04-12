@@ -1,11 +1,6 @@
 package org.wuyd.modules.system.service.dto;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.wuyd.modules.system.domain.User;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -48,9 +43,7 @@ public class NoteDTO implements Serializable {
      */
     private Boolean isAnonymous;
 
-    private User user;
-
-
+    private UserDTO user;
     /**
      * 赞
      */
@@ -66,4 +59,11 @@ public class NoteDTO implements Serializable {
      * 浏览量
      */
     private Long noteReadCount;
+
+    private Long noteSchool;
+
+    /**
+     * 城市
+     */
+    private Long noteCity;
 }

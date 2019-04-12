@@ -1,6 +1,8 @@
 package org.wuyd.modules.system.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,13 +30,53 @@ public class NoteServiceImpl implements NoteService {
     private NoteMapper noteMapper;
 
     @Override
-    public void save(NoteDTO noteDTO){
+    public NoteDTO save(NoteDTO noteDTO) {
         Note note = noteMapper.toEntity(noteDTO);
         User user = new User();
         user.setId(1L);
         user.setUsername("admin");
         user.setEmail("zhengjie@tom.com");
         note.setUser(user);
-        noteRepository.save(note);
+        return noteMapper.toDto(noteRepository.save(note));
+    }
+
+    @Override
+    public NoteDTO getNoteById(Long id) {
+        Note note = noteRepository.findById(id).get();
+        return noteMapper.toDto(note);
+    }
+
+    @Override
+    public Page<Note> getNoteBySchool(Long school, Pageable pageable) {
+        return noteRepository.findAllByNoteSchool(school, pageable);
+    }
+
+    @Override
+    public Page<Note> findAll(Pageable pageable) {
+        return noteRepository.findAll(pageable);
+    }
+
+    /**
+     * 根据城市分页查询
+     *
+     * @param city
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<Note> findAllByNoteCity(Long city, Pageable pageable) {
+        return noteRepository.findAllByNoteCity(city, pageable);
+    }
+
+    /**
+     * 根据用户分页查询
+     *
+     * @param user
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<Note> findAllByUser(User user, Pageable pageable) {
+        return noteRepository.findAllByUser(user, pageable);
     }
 }

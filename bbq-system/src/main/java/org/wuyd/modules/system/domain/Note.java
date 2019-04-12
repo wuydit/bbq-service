@@ -88,4 +88,16 @@ public class Note implements Serializable {
      */
     @Column(name = "note_read_count")
     private Long noteReadCount;
+
+    /**
+     * 学校
+     */
+    @Column(name = "note_school")
+    private Long noteSchool;
+
+    /**
+     * 城市
+     */
+    @Column(name = "note_city")
+    private Long noteCity;
 }
