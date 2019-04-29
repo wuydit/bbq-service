@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-04-19 17:37:03
+Date: 2019-04-29 17:24:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,18 +46,18 @@ DROP TABLE IF EXISTS `bbq_city`;
 CREATE TABLE `bbq_city` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_num` varchar(255) DEFAULT NULL,
-  `id_num_parent` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `id_num_parent` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=346 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bbq_city
 -- ----------------------------
-INSERT INTO `bbq_city` VALUES ('1', '110100', '市辖区', '110000');
-INSERT INTO `bbq_city` VALUES ('2', '110200', '县', '110000');
-INSERT INTO `bbq_city` VALUES ('3', '120100', '市辖区', '120000');
-INSERT INTO `bbq_city` VALUES ('4', '120200', '县', '120000');
+INSERT INTO `bbq_city` VALUES ('1', '110100', '昌平区', '110000');
+INSERT INTO `bbq_city` VALUES ('2', '110200', '海淀区', '110000');
+INSERT INTO `bbq_city` VALUES ('3', '120100', '渤海新区', '120000');
+INSERT INTO `bbq_city` VALUES ('4', '120200', '西青区', '120000');
 INSERT INTO `bbq_city` VALUES ('5', '130100', '石家庄市', '130000');
 INSERT INTO `bbq_city` VALUES ('6', '130200', '唐山市', '130000');
 INSERT INTO `bbq_city` VALUES ('7', '130300', '秦皇岛市', '130000');
@@ -519,13 +519,13 @@ INSERT INTO `bbq_province` VALUES ('34', '820000', '澳门特别行政区');
 -- ----------------------------
 DROP TABLE IF EXISTS `bbq_school`;
 CREATE TABLE `bbq_school` (
-  `school_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `school_name` varchar(255) DEFAULT NULL,
   `school_type` int(11) DEFAULT NULL,
   `area_id` varchar(255) DEFAULT NULL,
   `area_name` varchar(255) DEFAULT NULL,
   `display_order` int(11) DEFAULT NULL,
-  PRIMARY KEY (`school_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2336 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3077,90 +3077,6 @@ CREATE TABLE `picture` (
 
 -- ----------------------------
 -- Records of picture
--- ----------------------------
-
--- ----------------------------
--- Table structure for qiniu_config
--- ----------------------------
-DROP TABLE IF EXISTS `qiniu_config`;
-CREATE TABLE `qiniu_config` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `access_key` text COMMENT 'accessKey',
-  `bucket` varchar(255) DEFAULT NULL COMMENT 'Bucket 识别符',
-  `host` varchar(255) NOT NULL COMMENT '外链域名',
-  `secret_key` text COMMENT 'secretKey',
-  `type` varchar(255) DEFAULT NULL COMMENT '空间类型',
-  `zone` varchar(255) DEFAULT NULL COMMENT '机房',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
--- ----------------------------
--- Records of qiniu_config
--- ----------------------------
-
--- ----------------------------
--- Table structure for qiniu_content
--- ----------------------------
-DROP TABLE IF EXISTS `qiniu_content`;
-CREATE TABLE `qiniu_content` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `bucket` varchar(255) DEFAULT NULL COMMENT 'Bucket 识别符',
-  `name` varchar(255) DEFAULT NULL COMMENT '文件名称',
-  `size` varchar(255) DEFAULT NULL COMMENT '文件大小',
-  `type` varchar(255) DEFAULT NULL COMMENT '文件类型：私有或公开',
-  `update_time` datetime DEFAULT NULL COMMENT '上传或同步的时间',
-  `url` varchar(255) DEFAULT NULL COMMENT '文件url',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
--- ----------------------------
--- Records of qiniu_content
--- ----------------------------
-
--- ----------------------------
--- Table structure for quartz_job
--- ----------------------------
-DROP TABLE IF EXISTS `quartz_job`;
-CREATE TABLE `quartz_job` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `bean_name` varchar(255) DEFAULT NULL COMMENT 'Spring Bean名称',
-  `cron_expression` varchar(255) DEFAULT NULL COMMENT 'cron 表达式',
-  `is_pause` bit(1) DEFAULT NULL COMMENT '状态：1暂停、0启用',
-  `job_name` varchar(255) DEFAULT NULL COMMENT '任务名称',
-  `method_name` varchar(255) DEFAULT NULL COMMENT '方法名称',
-  `params` varchar(255) DEFAULT NULL COMMENT '参数',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `update_time` datetime DEFAULT NULL COMMENT '创建或更新日期',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
--- ----------------------------
--- Records of quartz_job
--- ----------------------------
-INSERT INTO `quartz_job` VALUES ('1', 'visitsTask', '0 0 0 * * ?', '\0', '更新访客记录', 'run', null, '每日0点创建新的访客记录', '2019-01-08 14:53:31');
-INSERT INTO `quartz_job` VALUES ('2', 'testTask', '0/5 * * * * ?', '', '测试1', 'run1', 'test', '带参测试，多参使用json', '2019-01-13 14:20:50');
-INSERT INTO `quartz_job` VALUES ('3', 'testTask', '0/5 * * * * ?', '', '测试', 'run', '', '不带参测试', '2019-01-14 09:59:19');
-
--- ----------------------------
--- Table structure for quartz_log
--- ----------------------------
-DROP TABLE IF EXISTS `quartz_log`;
-CREATE TABLE `quartz_log` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `baen_name` varchar(255) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `cron_expression` varchar(255) DEFAULT NULL,
-  `exception_detail` text,
-  `is_success` bit(1) DEFAULT NULL,
-  `job_name` varchar(255) DEFAULT NULL,
-  `method_name` varchar(255) DEFAULT NULL,
-  `params` varchar(255) DEFAULT NULL,
-  `time` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
--- ----------------------------
--- Records of quartz_log
 -- ----------------------------
 
 -- ----------------------------
