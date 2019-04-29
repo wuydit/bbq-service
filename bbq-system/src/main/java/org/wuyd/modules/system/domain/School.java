@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name="school")
+@Table(name="bbq_school")
 @AllArgsConstructor
 @NoArgsConstructor
 public class School  implements Serializable {
@@ -30,14 +30,8 @@ public class School  implements Serializable {
     /**
      * 校名
      */
-    @Column(name = "schoolname")
+    @Column(name = "school_name")
     private String schoolName;
-
-    /**
-     * 城市id
-     */
-    @Column(name = "city_id")
-    private Integer cityId;
 
     /**
      * 学校类型
@@ -46,38 +40,15 @@ public class School  implements Serializable {
     private Integer schoolType;
 
     /**
-     * 首字母
+     * 城市id
      */
-    @Column(name = "first_py")
-    private String firstPy;
+    @Column(name = "area_id")
+    private String areaId;
 
     /**
-     * 校名拼音
+     * 城市名
      */
-    @Column(name = "py")
-    private String py;
+    @Column(name = "area_name")
+    private String areaName;
 
-    /**
-     * 县id
-     */
-    @Column(name = "county_id")
-    private Integer countyId;
-
-    /**
-     * 省id
-     */
-    @Column(name = "province_id")
-    private Integer provinceId;
-
-    /**
-     * 状态
-     */
-    @Column(name = "status")
-    private Integer status;
-
-    /**
-     * 状态
-     */
-    @Column(name = "user_define")
-    private Integer userDefine;
 }

@@ -7,9 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.wuyd.modules.system.domain.City;
-import org.wuyd.modules.system.service.CityService;
-
+import org.wuyd.modules.system.domain.School;
+import org.wuyd.modules.system.service.SchoolService;
 import java.util.List;
 
 /**
@@ -21,15 +20,15 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("api")
-public class CityController {
+public class SchoolController {
 
     @Autowired
-    private CityService cityService;
+    private SchoolService schoolService;
 
-    @GetMapping("/citys")
-    public ResponseEntity<List<City>> getProvinces(@Param("idNumParent") String idNumParent){
-        log.info("get citys Param idNumParent is {}",idNumParent);
-        return ResponseEntity.ok(cityService.findByIdNumParent(idNumParent));
+    @GetMapping("/schools")
+    public ResponseEntity<List<School>> getSchools(@Param("areaId") String areaId) {
+        log.info("get getSchools Param areaId is {}",areaId);
+        return ResponseEntity.ok(schoolService.getSchools(areaId));
     }
 
 }

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.wuyd.modules.system.domain.City;
+import org.wuyd.modules.system.domain.Province;
 import org.wuyd.modules.system.repository.CityRepository;
+import org.wuyd.modules.system.repository.ProvinceRepository;
 import org.wuyd.modules.system.service.CityService;
+import org.wuyd.modules.system.service.ProvinceService;
 import org.wuyd.modules.system.service.dto.CityDTO;
 import org.wuyd.modules.system.service.mapper.CityMapper;
 
@@ -20,16 +22,13 @@ import java.util.List;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-public class CityServiceImpl implements CityService {
+public class ProvinceServiceImpl implements ProvinceService {
 
     @Autowired
-    private CityRepository cityRepository;
-
-    @Autowired
-    private CityMapper cityMapper;
+    private ProvinceRepository  provinceRepository;
 
     @Override
-    public List<City> findByIdNumParent(String idNumParent) {
-        return cityRepository.findAllByIdNumParent(idNumParent);
+    public List<Province> getProvinces() {
+        return provinceRepository.findAll();
     }
 }

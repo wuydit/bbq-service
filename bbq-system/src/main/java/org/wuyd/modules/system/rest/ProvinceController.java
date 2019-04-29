@@ -1,14 +1,15 @@
 package org.wuyd.modules.system.rest;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.wuyd.modules.system.domain.City;
+import org.wuyd.modules.system.domain.Province;
 import org.wuyd.modules.system.service.CityService;
+import org.wuyd.modules.system.service.ProvinceService;
+import org.wuyd.modules.system.service.dto.CityDTO;
 
 import java.util.List;
 
@@ -18,18 +19,16 @@ import java.util.List;
  * @description TODO
  * @time 2019/4/10 15:39
  */
-@Slf4j
 @RestController
 @RequestMapping("api")
-public class CityController {
+public class ProvinceController {
 
     @Autowired
-    private CityService cityService;
+    private ProvinceService provinceService;
 
-    @GetMapping("/citys")
-    public ResponseEntity<List<City>> getProvinces(@Param("idNumParent") String idNumParent){
-        log.info("get citys Param idNumParent is {}",idNumParent);
-        return ResponseEntity.ok(cityService.findByIdNumParent(idNumParent));
+    @GetMapping("/provinces")
+    public ResponseEntity<List<Province>> getProvinces(){
+        return ResponseEntity.ok(provinceService.getProvinces());
     }
 
 }

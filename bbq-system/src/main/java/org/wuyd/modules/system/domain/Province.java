@@ -14,15 +14,15 @@ import java.io.Serializable;
  * @author wuyd
  * @version 1.0
  * @description TODO
- * @time 2019/4/10 14:40
+ * @time 2019/4/29 14:28
  */
 @Entity
 @Getter
 @Setter
-@Table(name="bbq_city")
+@Table(name="bbq_province")
 @AllArgsConstructor
 @NoArgsConstructor
-public class City implements Serializable {
+public class Province implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(groups = User.Update.class)
@@ -33,8 +33,5 @@ public class City implements Serializable {
 
     @Column(name = "id_num")
     private String idNum;
-
-    @Column(name = "id_num_parent")
-    private String idNumParent;
 
 }
