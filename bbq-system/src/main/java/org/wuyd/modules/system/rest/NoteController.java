@@ -1,5 +1,6 @@
 package org.wuyd.modules.system.rest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,12 +13,16 @@ import org.wuyd.modules.system.service.UserService;
 import org.wuyd.modules.system.service.dto.NoteDTO;
 import org.wuyd.modules.system.service.mapper.UserMapper;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 /**
  * @author wuyd
  * @version 1.0
  * @description TODO
  * @time 2019/4/10 17:12
  */
+@Slf4j
 @RestController
 @RequestMapping("api")
 public class NoteController {
@@ -38,6 +43,8 @@ public class NoteController {
      */
     @PostMapping("/note")
     public ResponseEntity insert(@RequestBody NoteDTO noteDTO){
+        log.info("note insert {}",noteDTO.toString());
+        noteDTO.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         return ResponseEntity.ok(noteService.save(noteDTO));
     }
 

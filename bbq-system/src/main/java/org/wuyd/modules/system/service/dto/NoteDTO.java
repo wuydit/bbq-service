@@ -1,6 +1,9 @@
 package org.wuyd.modules.system.service.dto;
 
 import lombok.*;
+import org.wuyd.modules.system.domain.City;
+import org.wuyd.modules.system.domain.School;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -60,10 +63,10 @@ public class NoteDTO implements Serializable {
      */
     private Long noteReadCount;
 
-    private Long noteSchool;
+    private School noteSchool;
 
     /**
      * 城市
      */
-    private Long noteCity;
+    private City noteCity;
 }

@@ -3,13 +3,10 @@ package org.wuyd.modules.system.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.wuyd.modules.system.domain.Province;
-import org.wuyd.modules.system.service.CityService;
 import org.wuyd.modules.system.service.ProvinceService;
-import org.wuyd.modules.system.service.dto.CityDTO;
 
 import java.util.List;
 

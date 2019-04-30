@@ -7,8 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.wuyd.modules.system.domain.City;
 import org.wuyd.modules.system.repository.CityRepository;
 import org.wuyd.modules.system.service.CityService;
-import org.wuyd.modules.system.service.dto.CityDTO;
-import org.wuyd.modules.system.service.mapper.CityMapper;
 
 import java.util.List;
 
@@ -24,9 +22,6 @@ public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
-
-    @Autowired
-    private CityMapper cityMapper;
 
     @Override
     public List<City> findByIdNumParent(String idNumParent) {

@@ -25,7 +25,6 @@ import java.io.Serializable;
 public class City implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(groups = User.Update.class)
     private Integer id;
 
     @NotBlank

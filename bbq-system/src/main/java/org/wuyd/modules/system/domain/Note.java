@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.sql.Update;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,23 +28,23 @@ public class Note implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(groups = User.Update.class)
+    @NotNull(groups = Update.class)
     private Long id;
 
     /**
      * 标题
      */
-    @Column(name = "note_title")
+    @Column(name = "note_title",nullable=false,length = 50)
     private String noteTitle;
     /**
      * 概述
      */
-    @Column(name = "note_abstract")
+    @Column(name = "note_abstract",nullable=false,length = 400)
     private String noteAbstract;
     /**
      * 正文
      */
-    @Column(name = "note_content")
+    @Column(name = "note_content",nullable=false,length = 5000)
     private String noteContent;
 
     /**
@@ -56,14 +57,14 @@ public class Note implements Serializable {
     /**
      * 是否已被删除
      */
-    @Column(name = "is_delete")
-    private Boolean isDelete;
+    @Column(name = "is_delete",insertable = false,columnDefinition = "int default 0")
+    private Boolean isDelete  = false;
 
     /**
      * 是否匿名
      */
-    @Column(name = "is_Anonymous")
-    private Boolean isAnonymous;
+    @Column(name = "is_Anonymous",insertable = false,columnDefinition = "int default 0")
+    private Boolean isAnonymous = false;
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -73,31 +74,33 @@ public class Note implements Serializable {
     /**
      * 赞
      */
-    @Column(name = "note_praise")
-    private Long notePraise;
+    @Column(name = "note_praise",insertable = false,columnDefinition = "bigint default 0")
+    private Long notePraise = 0L;
 
 
     /**
      * 踩
      */
-    @Column(name = "note_trash")
-    private Long noteTrash;
+    @Column(name = "note_trash",insertable = false,columnDefinition = "bigint default 0")
+    private Long noteTrash = 0L;
 
     /**
      * 浏览量
      */
-    @Column(name = "note_read_count")
-    private Long noteReadCount;
+    @Column(name = "note_read_count",insertable = false,columnDefinition = "bigint default 0")
+    private Long noteReadCount = 0L;
 
     /**
      * 学校
      */
-    @Column(name = "note_school")
-    private Long noteSchool;
+    @ManyToOne
+    @JoinColumn(name="note_school")
+    private School noteSchool;
 
     /**
      * 城市
      */
-    @Column(name = "note_city")
-    private Long noteCity;
+    @ManyToOne
+    @JoinColumn(name="note_city")
+    private City noteCity;
 }

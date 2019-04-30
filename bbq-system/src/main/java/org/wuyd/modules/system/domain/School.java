@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.sql.Update;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,8 +25,7 @@ import java.io.Serializable;
 public class School  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(groups = User.Update.class)
-    private Long id;
+    private Integer id;
 
     /**
      * 校名

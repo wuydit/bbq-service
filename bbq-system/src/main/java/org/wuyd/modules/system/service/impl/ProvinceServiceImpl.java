@@ -5,12 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.wuyd.modules.system.domain.Province;
-import org.wuyd.modules.system.repository.CityRepository;
 import org.wuyd.modules.system.repository.ProvinceRepository;
-import org.wuyd.modules.system.service.CityService;
 import org.wuyd.modules.system.service.ProvinceService;
-import org.wuyd.modules.system.service.dto.CityDTO;
-import org.wuyd.modules.system.service.mapper.CityMapper;
 
 import java.util.List;
 

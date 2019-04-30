@@ -2,7 +2,6 @@ package org.wuyd.modules.system.service;
 
 
 import org.wuyd.modules.system.domain.Province;
-import org.wuyd.modules.system.service.dto.CityDTO;
 
 import java.util.List;
 

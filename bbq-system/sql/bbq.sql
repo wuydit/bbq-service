@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-04-29 17:24:05
+Date: 2019-04-30 16:57:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -407,27 +407,30 @@ DROP TABLE IF EXISTS `bbq_note`;
 CREATE TABLE `bbq_note` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `create_time` datetime DEFAULT NULL,
-  `is_anonymous` bit(1) DEFAULT NULL,
-  `is_delete` bit(1) DEFAULT NULL,
-  `note_abstract` varchar(255) DEFAULT NULL,
-  `note_content` varchar(255) DEFAULT NULL,
-  `note_praise` bigint(20) DEFAULT NULL,
-  `note_read_count` bigint(20) DEFAULT NULL,
-  `note_title` varchar(255) DEFAULT NULL,
-  `note_trash` bigint(20) DEFAULT NULL,
+  `is_anonymous` int(11) DEFAULT '0',
+  `is_delete` int(11) DEFAULT '0',
+  `note_abstract` varchar(400) NOT NULL,
+  `note_content` varchar(5000) NOT NULL,
+  `note_praise` bigint(20) DEFAULT '0',
+  `note_read_count` bigint(20) DEFAULT '0',
+  `note_title` varchar(50) NOT NULL,
+  `note_trash` bigint(20) DEFAULT '0',
+  `note_city` int(11) DEFAULT NULL,
+  `note_school` int(11) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  `note_city` bigint(20) DEFAULT NULL,
-  `note_school` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `FKh36csr5v2qxaujh5753wx330x` (`note_city`),
+  KEY `FKeihk4ulcjg5b0mhkjnhulptxt` (`note_school`),
   KEY `FK8ihw3m2w11p5s29s06js1wl1m` (`user_id`),
-  CONSTRAINT `FK8ihw3m2w11p5s29s06js1wl1m` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK8ihw3m2w11p5s29s06js1wl1m` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKeihk4ulcjg5b0mhkjnhulptxt` FOREIGN KEY (`note_school`) REFERENCES `bbq_school` (`id`),
+  CONSTRAINT `FKh36csr5v2qxaujh5753wx330x` FOREIGN KEY (`note_city`) REFERENCES `bbq_city` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bbq_note
 -- ----------------------------
-INSERT INTO `bbq_note` VALUES ('1', '2019-04-10 17:57:42', '\0', '\0', '概述》》》概述》》》概述》》》概述》》》', '正文', '23', null, '标题党标题党标题党标题党', '12', '1', '1', '1');
-INSERT INTO `bbq_note` VALUES ('2', '2019-05-07 14:41:06', '', '\0', '17号和18日下午禁止...', '17号和18日下午禁止进入考试区域', '213123', '123', '公告', '23', '3', '1', '1');
+INSERT INTO `bbq_note` VALUES ('1', '2019-04-30 16:54:15', '0', '0', '33333333333333', '文章内容33333333333333333', '0', '0', '333333333', '0', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for bbq_post
