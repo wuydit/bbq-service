@@ -1,20 +1,19 @@
 package org.wuyd.aspect;
 
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.wuyd.domain.Log;
-import org.wuyd.exception.BadRequestException;
-import org.wuyd.service.LogService;
-import org.wuyd.utils.ThrowableUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.wuyd.domain.Log;
+import org.wuyd.exception.BadRequestException;
+import org.wuyd.service.LogService;
+import org.wuyd.utils.ThrowableUtil;
 
 
 /**
@@ -23,9 +22,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
-public class LogAspect {
+public class SysLogAspect {
 
-    private Logger logger = LoggerFactory.getLogger(LogAspect.class);
+    private Logger logger = LoggerFactory.getLogger(SysLogAspect.class);
 
     @Autowired
     private LogService logService;
@@ -35,7 +34,7 @@ public class LogAspect {
     /**
      * 配置切入点
      */
-    @Pointcut("@annotation(org.wuyd.aop.log.Log)")
+    @Pointcut("@annotation(org.wuyd.aop.log.SysLog)")
     public void logPointcut() {
         // 该方法无方法体,主要为了让同类中其他方法使用此切入点
     }
@@ -56,6 +55,7 @@ public class LogAspect {
         }
         Log log = new Log("INFO",System.currentTimeMillis() - currentTime);
         logService.save(joinPoint, log);
+        logger.info(log.toString());
         return result;
     }
 
@@ -70,5 +70,6 @@ public class LogAspect {
         Log log = new Log("ERROR",System.currentTimeMillis() - currentTime);
         log.setExceptionDetail(ThrowableUtil.getStackTrace(e));
         logService.save((ProceedingJoinPoint)joinPoint, log);
+        logger.error(log.toString());
     }
 }

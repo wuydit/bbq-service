@@ -1,5 +1,7 @@
 server:
   port: 8000
+  tomcat:
+    uri-encoding: UTF-8
 
 spring:
   profiles:
@@ -36,7 +38,12 @@ spring:
         min-idle: 8
     #连接超时时间
     timeout: 5000
-
+  #--------------------------charset--------------------------
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 #七牛云
 qiniu:

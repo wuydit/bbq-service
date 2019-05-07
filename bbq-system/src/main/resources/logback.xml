@@ -14,7 +14,14 @@
     <root level="info">
         <appender-ref ref="console" />
     </root>
+    <!-- controller -->
+    <logger name="org.wuyd.aspect" level="DEBUG" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
 
+    <logger name="org.wuyd.modules.system" level="INFO" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
     <!-- logback为java中的包 -->
     <logger name="me.aurora.rest" level="WARN" additivity="false"/>
 

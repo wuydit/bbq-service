@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 @Data
 @Table(name = "log")
 @NoArgsConstructor
+
 public class Log {
 
     @Id
