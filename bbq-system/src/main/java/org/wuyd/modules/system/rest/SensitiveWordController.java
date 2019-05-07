@@ -20,7 +20,7 @@ import org.wuyd.utils.SensitivewordFilter;
  */
 @Slf4j
 @RestController
-@RequestMapping("util")
+@RequestMapping("api")
 public class SensitiveWordController {
 
     @Autowired
