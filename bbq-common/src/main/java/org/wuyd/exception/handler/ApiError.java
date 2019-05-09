@@ -3,6 +3,7 @@ package org.wuyd.exception.handler;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
  * @date 2018-11-23
  */
 @Data
-class ApiError {
+class ApiError implements Serializable {
 
     private Integer status;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

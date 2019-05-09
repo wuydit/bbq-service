@@ -1,9 +1,12 @@
 package org.wuyd.modules.system.service.dto;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.wuyd.modules.system.domain.City;
 import org.wuyd.modules.system.domain.School;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -21,14 +24,20 @@ public class NoteDTO implements Serializable {
     /**
      * 标题
      */
+    @NotBlank(message = "标题不允许为空")
+    @Length(min = 1, max = 50, message = "标题 长度必须在 {min} - {max} 之间")
     private String noteTitle;
     /**
      * 概述
      */
+    @NotBlank(message = "概述不允许为空")
+    @Length(min = 1, max = 400, message = "概述 长度必须在 {min} - {max} 之间")
     private String noteAbstract;
     /**
      * 正文
      */
+    @NotBlank(message = "正文不允许为空")
+    @Length(min = 1, max = 20000, message = "正文 长度必须在 {min} - {max} 之间")
     private String noteContent;
 
     /**

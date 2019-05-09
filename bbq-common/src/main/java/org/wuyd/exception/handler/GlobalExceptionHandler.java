@@ -1,6 +1,7 @@
 package org.wuyd.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.wuyd.exception.BadRequestException;
 import org.wuyd.exception.EntityExistException;
 import org.wuyd.exception.EntityNotFoundException;
@@ -26,6 +27,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleException(Exception e){
         // 打印堆栈信息
@@ -39,6 +41,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity handleAccessDeniedException(AccessDeniedException e){
         // 打印堆栈信息
@@ -52,6 +55,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
 	@ExceptionHandler(value = BadRequestException.class)
 	public ResponseEntity<ApiError> badRequestException(BadRequestException e) {
         // 打印堆栈信息
@@ -65,6 +69,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ExceptionHandler(value = EntityExistException.class)
     public ResponseEntity<ApiError> entityExistException(EntityExistException e) {
         // 打印堆栈信息
@@ -78,6 +83,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseEntity<ApiError> entityNotFoundException(EntityNotFoundException e) {
         // 打印堆栈信息
@@ -92,6 +98,7 @@ public class GlobalExceptionHandler {
      * @returns
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
     public ResponseEntity<ApiError> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         // 打印堆栈信息
         log.error(ThrowableUtil.getStackTrace(e));

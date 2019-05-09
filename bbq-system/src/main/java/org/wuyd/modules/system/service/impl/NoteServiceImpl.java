@@ -41,6 +41,17 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public NoteDTO save(Note note){
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("admin");
+        user.setEmail("zhengjie@tom.com");
+        note.setUser(user);
+        return noteMapper.toDto(noteRepository.save(note));
+    }
+
+
+    @Override
     public NoteDTO getNoteById(Long id) {
         Note note = noteRepository.findById(id).get();
         return noteMapper.toDto(note);

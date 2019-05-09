@@ -5,13 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wuyd.modules.system.domain.Dynamic;
 import org.wuyd.modules.system.domain.Note;
 import org.wuyd.modules.system.domain.User;
+import org.wuyd.modules.system.repository.DynamicRepository;
+import org.wuyd.modules.system.service.DynamicService;
 import org.wuyd.modules.system.service.NoteService;
 import org.wuyd.modules.system.service.UserService;
 import org.wuyd.modules.system.service.dto.NoteDTO;
+import org.wuyd.modules.system.service.mapper.NoteMapper;
 import org.wuyd.modules.system.service.mapper.UserMapper;
+import org.wuyd.utils.DynamicTypeEnum;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -36,13 +42,20 @@ public class NoteController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private NoteMapper noteMapper;
+
+    @Autowired
+    private DynamicService dynamicService;
+
+
     /**
      * 添加页
      * @param noteDTO
      * @return
      */
     @PostMapping("/note")
-    public ResponseEntity insert(@RequestBody NoteDTO noteDTO){
+    public ResponseEntity insert(@Validated @RequestBody NoteDTO noteDTO){
         log.info("note insert {}",noteDTO.toString());
         noteDTO.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         return ResponseEntity.ok(noteService.save(noteDTO));
@@ -102,5 +115,72 @@ public class NoteController {
         return ResponseEntity.ok(noteService.findAllByUser(user,pageable));
     }
 
+    /**
+     * 点赞
+     * @param id
+     * @return
+     */
+    @GetMapping("/note/{id}/notePraise")
+    public ResponseEntity noteePraise(@PathVariable Long id){
+        User user = new User();
+        user.setId(1L);
+        return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.PRAISE,user);
+    }
 
+    /**
+     * 踩
+     * @param id
+     * @return
+     */
+    @GetMapping("/note/{id}/noteTrash")
+    public ResponseEntity noteTrash(@PathVariable Long id){
+        User user = new User();
+        user.setId(1L);
+       return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.TRASH,user);
+    }
+
+    /**
+     * 阅读量
+     * @param id
+     * @return
+     */
+    @GetMapping("/note/{id}/noteReadCount")
+    public ResponseEntity noteReadCount(@PathVariable Long id){
+        User user = new User();
+        user.setId(1L);
+        return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.READ,user);
+    }
+
+
+   private void noteDynamic(User user,Integer type,Note note){
+      Integer integer = dynamicService.countAllByUserAndTypeAndNote(user,type,note);
+      if(integer>0){
+          if(type != DynamicTypeEnum.READ.getType()){
+              dynamicService.deleteByUserAndTypeAndNote(user,type,note);
+          }
+      }else {
+          Dynamic dynamic = new Dynamic();
+          dynamic.setNote(note);
+          dynamic.setType(type);
+          dynamic.setUser(user);
+          dynamicService.insert(dynamic);
+      }
+   }
+    private ResponseEntity noteReadCountAndTrashAndPraise(Long id ,DynamicTypeEnum typeEnum,User user){
+        NoteDTO noteDTO = noteService.getNoteById(id);
+        Note note = noteMapper.toEntity(noteDTO);
+        noteDynamic(user,typeEnum.getType(),note);
+        Integer integer = dynamicService.countAllByTypeAndNote(typeEnum.getType(),note);
+        switch (typeEnum){
+            case PRAISE:
+                note.setNotePraise(Long.valueOf(integer));
+                break;
+            case TRASH:
+                note.setNoteTrash(Long.valueOf(integer));
+                break;
+                default:
+                    log.error("错误的类型");
+        }
+        return ResponseEntity.ok(noteService.save(note));
+    }
 }

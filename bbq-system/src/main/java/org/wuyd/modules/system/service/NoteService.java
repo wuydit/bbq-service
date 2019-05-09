@@ -18,6 +18,8 @@ public interface NoteService {
 
     NoteDTO save(NoteDTO noteDTO);
 
+    NoteDTO save(Note note);
+
     NoteDTO getNoteById(Long id);
 
     Page<Note> getNoteBySchool(Long school, Pageable pageable);

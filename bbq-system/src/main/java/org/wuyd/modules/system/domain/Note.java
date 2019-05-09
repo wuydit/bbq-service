@@ -44,7 +44,7 @@ public class Note implements Serializable {
     /**
      * 正文
      */
-    @Column(name = "note_content",nullable=false,length = 5000)
+    @Column(name = "note_content",nullable=false,length = 20000)
     private String noteContent;
 
     /**
