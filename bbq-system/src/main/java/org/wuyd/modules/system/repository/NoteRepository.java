@@ -34,6 +34,15 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
     Page<Note> findAllByNoteCity(Long city, Pageable pageable);
 
     /**
+     * 根据城市学校分页查询
+     *
+     * @param city
+     * @param pageable
+     * @return
+     */
+    Page<Note> findAllByNoteCityAndNoteSchool(Long city,Long school, Pageable pageable);
+
+    /**
      * 根据用户分页查询
      *
      * @param user
@@ -41,4 +50,65 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
      * @return
      */
     Page<Note> findAllByUser(User user, Pageable pageable);
+
+    /**
+     *
+     * @param noteAbstract 简写
+     * @param noteContent 内容
+     * @param noteTitle 标题
+     * @param city 城市
+     * @param school 学校
+     * @param pageable 分页
+     * @return note数据
+     */
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool(
+            String noteAbstract,
+            String noteContent,
+            String noteTitle,
+            Long city,
+            Long school,
+            Pageable pageable);
+    /**
+     * 主页查询
+     * @param noteAbstract 简写
+     * @param noteContent 内容
+     * @param noteTitle 标题
+     * @param city 城市
+     * @param pageable 分页
+     * @return note数据
+     */
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity(
+            String noteAbstract,
+            String noteContent,
+            String noteTitle,
+            Long city,
+            Pageable pageable);
+    /**
+     *主页查询
+     * @param noteAbstract 简写
+     * @param noteContent 内容
+     * @param noteTitle 标题
+     * @param school 学校
+     * @param pageable 分页
+     * @return note数据
+     */
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool(
+            String noteAbstract,
+            String noteContent,
+            String noteTitle,
+            Long school,
+            Pageable pageable);
+    /**
+     *主页查询
+     * @param noteAbstract 简写
+     * @param noteContent 内容
+     * @param noteTitle 标题
+     * @param pageable 分页
+     * @return note数据
+     */
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike(
+            String noteAbstract,
+            String noteContent,
+            String noteTitle,
+            Pageable pageable);
 }

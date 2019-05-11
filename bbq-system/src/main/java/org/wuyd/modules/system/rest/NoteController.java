@@ -1,9 +1,11 @@
 package org.wuyd.modules.system.rest;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +79,32 @@ public class NoteController {
      * @return
      */
     @GetMapping("/note")
-    public ResponseEntity<Page<Note>> getAll(Pageable pageable){
+    public ResponseEntity<Page<Note>> getAll(
+            @Param("search") String search,
+            @Param("city") Long city,
+            @Param("school") Long school,
+            Pageable pageable){
+        if(StringUtils.isEmpty(search) &&  school == null && city == null ){
+            return ResponseEntity.ok(noteService.findAll(pageable));
+        }
+        if(city == null && school == null && StringUtils.isNotEmpty(search)){
+            return ResponseEntity.ok(noteService.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike(search,pageable));
+        }
+
+        if(city != null && school != null  && StringUtils.isNotEmpty(search)){
+            return ResponseEntity.ok(noteService.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool(search,city,school,pageable));
+        }
+
+        if(city != null && school != null && StringUtils.isEmpty(search)){
+            return ResponseEntity.ok(noteService.findAllByNoteCityAndNoteSchool(city,school,pageable));
+        }
+
+        if(city == null && school != null && StringUtils.isNotEmpty(search)){
+            return ResponseEntity.ok(noteService.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool(search,school,pageable));
+        }
+        if(city != null && school == null && StringUtils.isNotEmpty(search)){
+            return ResponseEntity.ok(noteService.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity(search,city,pageable));
+        }
         return ResponseEntity.ok(noteService.findAll(pageable));
     }
 

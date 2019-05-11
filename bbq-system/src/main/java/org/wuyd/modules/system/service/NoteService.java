@@ -42,5 +42,17 @@ public interface NoteService {
      */
     Page<Note> findAllByUser(User user, Pageable pageable);
 
+    /**
+     * findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike
+     * @param search sou
+     * @param pageable 分页
+     * @return
+     */
+    Page<Note> findAllByNoteCityAndNoteSchool(Long city,Long school, Pageable pageable);
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike(String search, Pageable pageable);
 
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity(String search, Long city, Pageable pageable);
+
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool(String search, Long school, Pageable pageable);
+    Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool(String search, Long city, Long school, Pageable pageable);
 }

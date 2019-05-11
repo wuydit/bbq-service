@@ -90,4 +90,29 @@ public class NoteServiceImpl implements NoteService {
     public Page<Note> findAllByUser(User user, Pageable pageable) {
         return noteRepository.findAllByUser(user, pageable);
     }
+
+    @Override
+    public Page<Note> findAllByNoteCityAndNoteSchool(Long city,Long school, Pageable pageable) {
+        return noteRepository.findAllByNoteCityAndNoteSchool(city,school, pageable);
+    }
+    @Override
+    public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike(String search, Pageable pageable){
+        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike("%"+search+"%","%"+search+"%","%"+search+"%",pageable);
+    }
+    @Override
+    public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity(String search, Long city, Pageable pageable){
+        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity("%"+search+"%","%"+search+"%","%"+search+"%",city,pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool(String search, Long school, Pageable pageable){
+        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool("%"+search+"%","%"+search+"%","%"+search+"%",school,pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool(String search, Long city, Long school, Pageable pageable){
+        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool("%"+search+"%","%"+search+"%","%"+search+"%",city,school,pageable);
+    }
+
+
 }
