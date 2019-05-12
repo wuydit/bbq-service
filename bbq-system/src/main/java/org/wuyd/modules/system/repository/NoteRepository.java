@@ -4,7 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.wuyd.modules.system.domain.City;
 import org.wuyd.modules.system.domain.Note;
+import org.wuyd.modules.system.domain.School;
 import org.wuyd.modules.system.domain.User;
 
 /**
@@ -22,7 +24,7 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
      * @param pageable
      * @return
      */
-    Page<Note> findAllByNoteSchool(Long school, Pageable pageable);
+    Page<Note> findAllByNoteSchool(School school, Pageable pageable);
 
     /**
      * 根据城市分页查询
@@ -31,7 +33,7 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
      * @param pageable
      * @return
      */
-    Page<Note> findAllByNoteCity(Long city, Pageable pageable);
+    Page<Note> findAllByNoteCity(City city, Pageable pageable);
 
     /**
      * 根据城市学校分页查询
@@ -40,7 +42,7 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
      * @param pageable
      * @return
      */
-    Page<Note> findAllByNoteCityAndNoteSchool(Long city,Long school, Pageable pageable);
+    Page<Note> findAllByNoteCityAndNoteSchool(City city, School school, Pageable pageable);
 
     /**
      * 根据用户分页查询
@@ -65,8 +67,8 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
             String noteAbstract,
             String noteContent,
             String noteTitle,
-            Long city,
-            Long school,
+            City city,
+            School school,
             Pageable pageable);
     /**
      * 主页查询
@@ -81,7 +83,7 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
             String noteAbstract,
             String noteContent,
             String noteTitle,
-            Long city,
+            City city,
             Pageable pageable);
     /**
      *主页查询
@@ -96,7 +98,7 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
             String noteAbstract,
             String noteContent,
             String noteTitle,
-            Long school,
+            School school,
             Pageable pageable);
     /**
      *主页查询

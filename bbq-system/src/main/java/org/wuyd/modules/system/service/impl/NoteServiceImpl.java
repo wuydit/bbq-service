@@ -6,9 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.wuyd.modules.system.domain.City;
 import org.wuyd.modules.system.domain.Note;
+import org.wuyd.modules.system.domain.School;
 import org.wuyd.modules.system.domain.User;
+import org.wuyd.modules.system.repository.CityRepository;
 import org.wuyd.modules.system.repository.NoteRepository;
+import org.wuyd.modules.system.repository.SchoolRepository;
 import org.wuyd.modules.system.service.NoteService;
 import org.wuyd.modules.system.service.dto.NoteDTO;
 import org.wuyd.modules.system.service.mapper.NoteMapper;
@@ -28,6 +32,12 @@ public class NoteServiceImpl implements NoteService {
 
     @Autowired
     private NoteMapper noteMapper;
+
+    @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
+    private SchoolRepository schoolRepository;
 
     @Override
     public NoteDTO save(NoteDTO noteDTO) {
@@ -58,8 +68,9 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Page<Note> getNoteBySchool(Long school, Pageable pageable) {
-        return noteRepository.findAllByNoteSchool(school, pageable);
+    public Page<Note> findAllBySchool(Long school, Pageable pageable) {
+        School school1 = schoolRepository.findById(school.intValue()).get();
+        return noteRepository.findAllByNoteSchool(school1, pageable);
     }
 
     @Override
@@ -76,7 +87,8 @@ public class NoteServiceImpl implements NoteService {
      */
     @Override
     public Page<Note> findAllByNoteCity(Long city, Pageable pageable) {
-        return noteRepository.findAllByNoteCity(city, pageable);
+        City city1 = cityRepository.findById(city.intValue()).get();
+        return noteRepository.findAllByNoteCity(city1, pageable);
     }
 
     /**
@@ -93,7 +105,9 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Page<Note> findAllByNoteCityAndNoteSchool(Long city,Long school, Pageable pageable) {
-        return noteRepository.findAllByNoteCityAndNoteSchool(city,school, pageable);
+        City city1 = cityRepository.findById(city.intValue()).get();
+        School school1 = schoolRepository.findById(school.intValue()).get();
+        return noteRepository.findAllByNoteCityAndNoteSchool(city1,school1, pageable);
     }
     @Override
     public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike(String search, Pageable pageable){
@@ -101,17 +115,24 @@ public class NoteServiceImpl implements NoteService {
     }
     @Override
     public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity(String search, Long city, Pageable pageable){
-        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity("%"+search+"%","%"+search+"%","%"+search+"%",city,pageable);
+        City city1 = cityRepository.findById(city.intValue()).get();
+        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity(
+                "%"+search+"%","%"+search+"%","%"+search+"%",city1,pageable);
     }
 
     @Override
     public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool(String search, Long school, Pageable pageable){
-        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool("%"+search+"%","%"+search+"%","%"+search+"%",school,pageable);
+        School school1 = schoolRepository.findById(school.intValue()).get();
+        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteSchool(
+                "%"+search+"%","%"+search+"%","%"+search+"%",school1,pageable);
     }
 
     @Override
     public Page<Note> findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool(String search, Long city, Long school, Pageable pageable){
-        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool("%"+search+"%","%"+search+"%","%"+search+"%",city,school,pageable);
+        City city1 = cityRepository.findById(city.intValue()).get();
+        School school1 = schoolRepository.findById(school.intValue()).get();
+        return noteRepository.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCityAndNoteSchool(
+                "%"+search+"%","%"+search+"%","%"+search+"%",city1,school1,pageable);
     }
 
 

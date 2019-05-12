@@ -22,7 +22,7 @@ public interface NoteService {
 
     NoteDTO getNoteById(Long id);
 
-    Page<Note> getNoteBySchool(Long school, Pageable pageable);
+    Page<Note> findAllBySchool(Long school, Pageable pageable);
 
     Page<Note> findAll(Pageable pageable);
 

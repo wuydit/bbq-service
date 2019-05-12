@@ -16,4 +16,5 @@ public interface CityRepository extends JpaRepository<City, Integer>, JpaSpecifi
 
 
     List<City> findAllByIdNumParent(String idNumParent);
+
 }

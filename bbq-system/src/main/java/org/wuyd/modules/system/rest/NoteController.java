@@ -105,6 +105,14 @@ public class NoteController {
         if(city != null && school == null && StringUtils.isNotEmpty(search)){
             return ResponseEntity.ok(noteService.findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLikeAndNoteCity(search,city,pageable));
         }
+
+        if(city == null && school != null && StringUtils.isEmpty(search)){
+            return ResponseEntity.ok(noteService.findAllBySchool(school,pageable));
+        }
+
+        if(city != null && school == null && StringUtils.isEmpty(search)){
+            return ResponseEntity.ok(noteService.findAllByNoteCity(city,pageable));
+        }
         return ResponseEntity.ok(noteService.findAll(pageable));
     }
 
@@ -116,7 +124,7 @@ public class NoteController {
      */
     @GetMapping("/note/school/{school}")
     public ResponseEntity getNoteBySchool(@PathVariable Long school, Pageable pageable){
-        return ResponseEntity.ok(noteService.getNoteBySchool(school,pageable));
+        return ResponseEntity.ok(noteService.findAllBySchool(school,pageable));
     }
 
     /**
