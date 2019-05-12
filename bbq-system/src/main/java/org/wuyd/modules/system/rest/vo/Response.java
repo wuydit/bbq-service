@@ -32,4 +32,10 @@ public class Response implements Serializable {
      */
     @Builder.Default
     private Integer sensitiveWordSize = 0;
+
+    @Builder.Default
+    private Boolean isOccupy =Boolean.FALSE;
+
+    @Builder.Default
+    private Boolean isSend =Boolean.TRUE;
 }

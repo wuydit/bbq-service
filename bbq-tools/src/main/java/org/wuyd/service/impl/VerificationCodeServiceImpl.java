@@ -1,13 +1,6 @@
 package org.wuyd.service.impl;
 
-import cn.hutool.core.lang.Dict;
-import cn.hutool.core.util.RandomUtil;
-import cn.hutool.extra.template.Template;
-import cn.hutool.extra.template.TemplateConfig;
-import cn.hutool.extra.template.TemplateEngine;
-import cn.hutool.extra.template.TemplateUtil;
 import org.wuyd.domain.VerificationCode;
-import org.wuyd.domain.vo.EmailVo;
 import org.wuyd.exception.BadRequestException;
 import org.wuyd.repository.VerificationCodeRepository;
 import org.wuyd.service.VerificationCodeService;
@@ -17,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.concurrent.*;
 
 /**
@@ -34,27 +26,6 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     @Value("${code.expiration}")
     private Integer expiration;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public EmailVo sendEmail(VerificationCode code) {
-        EmailVo emailVo = null;
-        String content = "";
-        VerificationCode verificationCode = verificationCodeRepository.findByScenesAndTypeAndValueAndStatusIsTrue(code.getScenes(),code.getType(),code.getValue());
-        // 如果不存在有效的验证码，就创建一个新的
-        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template", TemplateConfig.ResourceMode.CLASSPATH));
-        Template template = engine.getTemplate("email/email.ftl");
-        if(verificationCode == null){
-            code.setCode(RandomUtil.randomNumbers (6));
-            content = template.render(Dict.create().set("code",code.getCode()));
-            emailVo = new EmailVo(Arrays.asList(code.getValue()),"BBQ",content);
-            timedDestruction(verificationCodeRepository.save(code));
-        // 存在就再次发送原来的验证码
-        } else {
-            content = template.render(Dict.create().set("code",verificationCode.getCode()));
-            emailVo = new EmailVo(Arrays.asList(verificationCode.getValue()),"BBQ",content);
-        }
-        return emailVo;
-    }
 
     @Override
     public void validated(VerificationCode code) {

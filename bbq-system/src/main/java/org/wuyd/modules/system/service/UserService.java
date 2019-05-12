@@ -20,7 +20,6 @@ public interface UserService {
      * @param id
      * @return
      */
-    //@Cacheable(key = "#p0")
     UserDTO findById(long id);
 
     /**
@@ -28,21 +27,18 @@ public interface UserService {
      * @param resources
      * @return
      */
-    @CacheEvict(allEntries = true)
     UserDTO create(User resources);
 
     /**
      * update
      * @param resources
      */
-    @CacheEvict(allEntries = true)
     void update(User resources);
 
     /**
      * delete
      * @param id
      */
-    @CacheEvict(allEntries = true)
     void delete(Long id);
 
     /**
@@ -50,7 +46,6 @@ public interface UserService {
      * @param userName
      * @return
      */
-    @Cacheable(keyGenerator = "keyGenerator")
     User findByName(String userName);
 
     /**
@@ -58,7 +53,6 @@ public interface UserService {
      * @param jwtUser
      * @param encryptPassword
      */
-    @CacheEvict(allEntries = true)
     void updatePass(JwtUser jwtUser, String encryptPassword);
 
     /**
@@ -66,7 +60,6 @@ public interface UserService {
      * @param jwtUser
      * @param url
      */
-    @CacheEvict(allEntries = true)
     void updateAvatar(JwtUser jwtUser, String url);
 
     /**
@@ -74,13 +67,13 @@ public interface UserService {
      * @param jwtUser
      * @param email
      */
-    @CacheEvict(allEntries = true)
     void updateEmail(JwtUser jwtUser, String email);
 
     /**
      * bbq 注册
      * @param register
      */
-    @CacheEvict(allEntries = true)
     void register(RegisterDTO register);
+
+    User findByEmail(String email);
 }

@@ -22,13 +22,9 @@
             <artifactId>bbq-logging</artifactId>
             <version>1.5</version>
         </dependency>
-
-        <!--邮件依赖-->
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>${mail.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
     </dependencies>
 </project>

@@ -44,7 +44,18 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
-
+  mail:
+    host: smtp.163.com
+    username: wuydit@163.com
+    password: wuya6565333
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enable: true
+          required: true
 #七牛云
 qiniu:
   # 文件大小 /M

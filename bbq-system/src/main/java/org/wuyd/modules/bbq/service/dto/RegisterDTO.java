@@ -30,7 +30,6 @@ public class RegisterDTO implements Serializable {
     private String phone;
 
     @NotBlank
-    @JsonIgnore
     private String password;
 
     @NotBlank

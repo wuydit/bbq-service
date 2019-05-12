@@ -1,8 +1,6 @@
 package org.wuyd.rest;
 
 import org.wuyd.domain.VerificationCode;
-import org.wuyd.domain.vo.EmailVo;
-import org.wuyd.service.EmailService;
 import org.wuyd.service.VerificationCodeService;
 import org.wuyd.utils.BbqConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,27 +25,6 @@ public class VerificationCodeController {
     @Qualifier("jwtUserDetailsService")
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private EmailService emailService;
-
-    @PostMapping(value = "/code/resetEmail")
-    public ResponseEntity resetEmail(@RequestBody VerificationCode code) throws Exception {
-        code.setScenes(BbqConstant.RESET_MAIL);
-        EmailVo emailVo = verificationCodeService.sendEmail(code);
-        emailService.send(emailVo,emailService.find());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/code/email/resetPass")
-    public ResponseEntity resetPass(@RequestParam String email) throws Exception {
-        VerificationCode code = new VerificationCode();
-        code.setType("email");
-        code.setValue(email);
-        code.setScenes(BbqConstant.RESET_MAIL);
-        EmailVo emailVo = verificationCodeService.sendEmail(code);
-        emailService.send(emailVo,emailService.find());
-        return new ResponseEntity(HttpStatus.OK);
-    }
 
     @GetMapping(value = "/code/validated")
     public ResponseEntity validated(VerificationCode code){

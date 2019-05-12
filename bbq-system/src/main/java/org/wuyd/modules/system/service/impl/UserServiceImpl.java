@@ -11,6 +11,7 @@ import org.wuyd.modules.security.utils.JwtTokenUtil;
 import org.wuyd.modules.system.service.UserService;
 import org.wuyd.modules.system.service.dto.UserDTO;
 import org.wuyd.modules.system.service.mapper.UserMapper;
+import org.wuyd.utils.EncryptUtils;
 import org.wuyd.utils.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,7 +107,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (user == null) {
-            throw new EntityNotFoundException(User.class, "name", userName);
+            return null;
         } else {
             return user;
         }
@@ -135,8 +136,16 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setAvatar(register.getAvatar());
         user.setEmail(register.getEmail());
-        user.setPassword(register.getPassword());
+        user.setPassword(EncryptUtils.encryptPassword(
+                EncryptUtils.encryptPassword(register.getPassword())));
         user.setUsername(register.getUsername());
+        user.setEnabled(Boolean.TRUE);
+        user.setPhone(register.getPhone());
         userRepository.save(user);
+    }
+
+    @Override
+    public User findByEmail(String email){
+      return userRepository.findByEmail(email);
     }
 }
