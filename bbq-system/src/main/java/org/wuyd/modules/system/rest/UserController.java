@@ -11,7 +11,9 @@ import org.wuyd.modules.system.domain.User;
 import org.wuyd.exception.BadRequestException;
 import org.wuyd.modules.security.security.JwtUser;
 import org.wuyd.modules.system.repository.MailRepository;
+import org.wuyd.modules.system.repository.UserRepository;
 import org.wuyd.modules.system.rest.vo.Response;
+import org.wuyd.modules.system.service.mapper.UserMapper;
 import org.wuyd.service.PictureService;
 import org.wuyd.service.VerificationCodeService;
 import org.wuyd.utils.BbqConstant;
@@ -65,6 +67,10 @@ public class UserController {
 
     @Autowired
     private MailRepository mailRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UserMapper userMapper;
 
 
     private static final String ENTITY_NAME = "user";
@@ -88,7 +94,6 @@ public class UserController {
 
     @Log("修改用户")
     @PutMapping(value = "/users")
-    @PreAuthorize("hasAnyRole('ADMIN','USER_ALL','USER_EDIT')")
     public ResponseEntity update(@Validated(User.Update.class) @RequestBody User resources) {
         userService.update(resources);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -130,11 +135,11 @@ public class UserController {
     public ResponseEntity updatePass(@PathVariable String pass) {
         UserDetails userDetails = SecurityContextHolder.getUserDetails();
         JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
-        if (jwtUser.getPassword().equals(EncryptUtils.encryptPassword(pass))) {
+        if (jwtUser.getPassword().equals(EncryptUtils.encryptPassword(EncryptUtils.encryptPassword(pass)))) {
             throw new BadRequestException("新密码不能与旧密码相同");
         }
-        userService.updatePass(jwtUser, EncryptUtils.encryptPassword(pass));
-        return new ResponseEntity(HttpStatus.OK);
+        userService.updatePass(jwtUser, EncryptUtils.encryptPassword(EncryptUtils.encryptPassword(pass)));
+        return ResponseEntity.ok(Response.builder().msg("密码修改成功").build());
     }
 
     /**
@@ -236,5 +241,18 @@ public class UserController {
             return ResponseEntity.ok(Response.builder().isOccupy(Boolean.FALSE).build());
         }
 
+    }
+
+    @GetMapping(value = "/user")
+    public ResponseEntity getUser(@Param("username") String username) {
+           return ResponseEntity.ok(userService.findByName(username));
+    }
+
+    @PutMapping("/user/update")
+    public ResponseEntity update1(@RequestBody User user) {
+        UserDTO userDTO = userService.findById(user.getId());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setPhone(user.getPhone());
+        return ResponseEntity.ok(userRepository.save(userMapper.toEntity(userDTO)));
     }
 }

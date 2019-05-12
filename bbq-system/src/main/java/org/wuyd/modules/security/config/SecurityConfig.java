@@ -100,7 +100,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( HttpMethod.POST,"/bbq/register").permitAll()
                // .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
                // .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
-                //bbq end
+                .antMatchers( HttpMethod.GET,"/api/provinces").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/schools").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/citys").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/note/**").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/note").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/talk/**").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/mail/**").permitAll()
 
                 // swagger start
                 .antMatchers("/swagger-ui.html").anonymous()
@@ -111,10 +117,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 接口限流测试
                 .antMatchers("/test/**").anonymous()
-                .antMatchers(HttpMethod.OPTIONS, "/**").anonymous();
+                .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
 
                 // 所有请求都需要认证
-               // .anyRequest().authenticated();
+                .anyRequest().authenticated();
 
         httpSecurity
                 .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

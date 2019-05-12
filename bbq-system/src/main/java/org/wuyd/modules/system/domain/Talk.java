@@ -46,23 +46,14 @@ public class Talk implements Serializable {
     /**
      * 是否已被删除
      */
-    @Column(name = "is_delete")
-    private Boolean isDelete;
+    @Column(name = "is_delete",insertable = false,columnDefinition = "int default 0")
+    private Boolean isDelete  = false;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
-    /**
-     * 赞
-     */
-    @Column(name = "talk_praise")
-    private Long talkPraise;
-
-
-    /**
-     * 踩
-     */
-    @Column(name = "talk_trash")
-    private Long talkTrash;
+    @ManyToOne
+    @JoinColumn(name="note_id")
+    private Note note;
 }

@@ -1,11 +1,15 @@
 package org.wuyd.modules.system.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.wuyd.modules.security.security.JwtUser;
 import org.wuyd.modules.system.domain.City;
 import org.wuyd.modules.system.domain.Note;
 import org.wuyd.modules.system.domain.School;
@@ -16,6 +20,7 @@ import org.wuyd.modules.system.repository.SchoolRepository;
 import org.wuyd.modules.system.service.NoteService;
 import org.wuyd.modules.system.service.dto.NoteDTO;
 import org.wuyd.modules.system.service.mapper.NoteMapper;
+import org.wuyd.utils.SecurityContextHolder;
 
 /**
  * @author wuyd
@@ -39,23 +44,31 @@ public class NoteServiceImpl implements NoteService {
     @Autowired
     private SchoolRepository schoolRepository;
 
+    @Autowired
+    @Qualifier("jwtUserDetailsService")
+    private UserDetailsService userDetailsService;
+
     @Override
     public NoteDTO save(NoteDTO noteDTO) {
         Note note = noteMapper.toEntity(noteDTO);
+        UserDetails userDetails = SecurityContextHolder.getUserDetails();
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
         User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setEmail("zhengjie@tom.com");
+        user.setId(jwtUser.getId());
+        user.setUsername(jwtUser.getUsername());
+        user.setEmail(jwtUser.getEmail());
         note.setUser(user);
         return noteMapper.toDto(noteRepository.save(note));
     }
 
     @Override
     public NoteDTO save(Note note){
+        UserDetails userDetails = SecurityContextHolder.getUserDetails();
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
         User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setEmail("zhengjie@tom.com");
+        user.setId(jwtUser.getId());
+        user.setUsername(jwtUser.getUsername());
+        user.setEmail(jwtUser.getEmail());
         note.setUser(user);
         return noteMapper.toDto(noteRepository.save(note));
     }
