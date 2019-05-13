@@ -1,10 +1,13 @@
 package org.wuyd.modules.system.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.wuyd.modules.system.domain.Dynamic;
 import org.wuyd.modules.system.domain.Note;
 import org.wuyd.modules.system.domain.User;
+
+import java.util.List;
 
 /**
  * @author wuyd
@@ -38,4 +41,6 @@ public interface DynamicRepository extends JpaRepository<Dynamic, Long>, JpaSpec
      * @return
      */
     Integer countAllByTypeAndNote(Integer type, Note note);
+
+    List<Dynamic> findAllByUser(User user, Pageable pageable);
 }

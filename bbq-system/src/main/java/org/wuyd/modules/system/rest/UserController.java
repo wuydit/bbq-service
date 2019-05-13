@@ -7,12 +7,15 @@ import org.wuyd.domain.Picture;
 import org.wuyd.domain.VerificationCode;
 import org.wuyd.modules.bbq.service.dto.RegisterDTO;
 import org.wuyd.modules.system.domain.Mail;
+import org.wuyd.modules.system.domain.Note;
 import org.wuyd.modules.system.domain.User;
 import org.wuyd.exception.BadRequestException;
 import org.wuyd.modules.security.security.JwtUser;
 import org.wuyd.modules.system.repository.MailRepository;
 import org.wuyd.modules.system.repository.UserRepository;
 import org.wuyd.modules.system.rest.vo.Response;
+import org.wuyd.modules.system.service.NoteService;
+import org.wuyd.modules.system.service.dto.HomeDTO;
 import org.wuyd.modules.system.service.mapper.UserMapper;
 import org.wuyd.service.PictureService;
 import org.wuyd.service.VerificationCodeService;
@@ -36,6 +39,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,6 +75,8 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NoteService noteService;
 
 
     private static final String ENTITY_NAME = "user";
@@ -254,5 +260,20 @@ public class UserController {
         userDTO.setUsername(user.getUsername());
         userDTO.setPhone(user.getPhone());
         return ResponseEntity.ok(userRepository.save(userMapper.toEntity(userDTO)));
+    }
+
+    @GetMapping(value = "/user/{userId}")
+    public ResponseEntity getUserInfo(@PathVariable("userId") Long userId, Pageable pageable) {
+        HomeDTO homeDTO = new HomeDTO();
+        UserDTO userDTO = userService.findById(userId);
+        homeDTO.setUsername(userDTO.getUsername());
+        List<Note> list = noteService.findAllByUser(userMapper.toEntity(userDTO));
+        homeDTO.setNoteSize(list.size());
+        long noteStrSize = 0L;
+        for (Note note : list) {
+            noteStrSize+=note.getNoteContent().length();
+        }
+        homeDTO.setNoteContentSize(noteStrSize);
+        return ResponseEntity.ok(homeDTO);
     }
 }

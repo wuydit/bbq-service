@@ -105,8 +105,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( HttpMethod.GET,"/api/schools").permitAll()
                 .antMatchers( HttpMethod.GET,"/api/citys").permitAll()
                 .antMatchers( HttpMethod.GET,"/api/note/**").permitAll()
-                .antMatchers( HttpMethod.GET,"/api/note").permitAll()
-                .antMatchers( HttpMethod.GET,"/api/talk/**").permitAll()
                 .antMatchers( HttpMethod.GET,"/api/mail/**").permitAll()
 
                 // swagger start

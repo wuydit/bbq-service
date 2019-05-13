@@ -9,6 +9,8 @@ import org.wuyd.modules.system.domain.Note;
 import org.wuyd.modules.system.domain.School;
 import org.wuyd.modules.system.domain.User;
 
+import java.util.List;
+
 /**
  * @author wuyd
  * @version 1.0
@@ -52,6 +54,10 @@ public interface NoteRepository extends JpaRepository<Note, Long>, JpaSpecificat
      * @return
      */
     Page<Note> findAllByUser(User user, Pageable pageable);
+
+    Page<Note> findAllByUserAndIsAnonymous(User user,Boolean isAnonymous, Pageable pageable);
+
+    List<Note> findAllByUser(User user);
 
     /**
      *

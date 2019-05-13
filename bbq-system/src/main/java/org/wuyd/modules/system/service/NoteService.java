@@ -8,6 +8,8 @@ import org.wuyd.modules.system.domain.Note;
 import org.wuyd.modules.system.domain.User;
 import org.wuyd.modules.system.service.dto.NoteDTO;
 
+import java.util.List;
+
 /**
  * @author wuyd
  * @version 1.0
@@ -42,9 +44,9 @@ public interface NoteService {
      */
     Page<Note> findAllByUser(User user, Pageable pageable);
 
+    List<Note> findAllByUser(User user);
     /**
      * findAllByNoteAbstractLikeAndNoteContentLikeAndNoteTitleLike
-     * @param search sou
      * @param pageable 分页
      * @return
      */

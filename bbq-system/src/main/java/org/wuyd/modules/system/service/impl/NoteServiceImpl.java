@@ -22,6 +22,8 @@ import org.wuyd.modules.system.service.dto.NoteDTO;
 import org.wuyd.modules.system.service.mapper.NoteMapper;
 import org.wuyd.utils.SecurityContextHolder;
 
+import java.util.List;
+
 /**
  * @author wuyd
  * @version 1.0
@@ -51,25 +53,11 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteDTO save(NoteDTO noteDTO) {
         Note note = noteMapper.toEntity(noteDTO);
-        UserDetails userDetails = SecurityContextHolder.getUserDetails();
-        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
-        User user = new User();
-        user.setId(jwtUser.getId());
-        user.setUsername(jwtUser.getUsername());
-        user.setEmail(jwtUser.getEmail());
-        note.setUser(user);
         return noteMapper.toDto(noteRepository.save(note));
     }
 
     @Override
     public NoteDTO save(Note note){
-        UserDetails userDetails = SecurityContextHolder.getUserDetails();
-        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
-        User user = new User();
-        user.setId(jwtUser.getId());
-        user.setUsername(jwtUser.getUsername());
-        user.setEmail(jwtUser.getEmail());
-        note.setUser(user);
         return noteMapper.toDto(noteRepository.save(note));
     }
 
@@ -113,7 +101,12 @@ public class NoteServiceImpl implements NoteService {
      */
     @Override
     public Page<Note> findAllByUser(User user, Pageable pageable) {
-        return noteRepository.findAllByUser(user, pageable);
+        return noteRepository.findAllByUserAndIsAnonymous(user,Boolean.FALSE, pageable);
+    }
+
+    @Override
+    public List<Note> findAllByUser(User user) {
+        return noteRepository.findAllByUser(user);
     }
 
     @Override

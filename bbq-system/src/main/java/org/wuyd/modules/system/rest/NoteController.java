@@ -3,12 +3,16 @@ package org.wuyd.modules.system.rest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wuyd.modules.security.security.JwtUser;
 import org.wuyd.modules.system.domain.Dynamic;
 import org.wuyd.modules.system.domain.Note;
 import org.wuyd.modules.system.domain.User;
@@ -17,9 +21,11 @@ import org.wuyd.modules.system.service.DynamicService;
 import org.wuyd.modules.system.service.NoteService;
 import org.wuyd.modules.system.service.UserService;
 import org.wuyd.modules.system.service.dto.NoteDTO;
+import org.wuyd.modules.system.service.dto.UserDTO;
 import org.wuyd.modules.system.service.mapper.NoteMapper;
 import org.wuyd.modules.system.service.mapper.UserMapper;
 import org.wuyd.utils.DynamicTypeEnum;
+import org.wuyd.utils.SecurityContextHolder;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -50,6 +56,10 @@ public class NoteController {
     @Autowired
     private DynamicService dynamicService;
 
+    @Autowired
+    @Qualifier("jwtUserDetailsService")
+    private UserDetailsService userDetailsService;
+
 
     /**
      * 添加页
@@ -60,6 +70,13 @@ public class NoteController {
     public ResponseEntity insert(@Validated @RequestBody NoteDTO noteDTO){
         log.info("note insert {}",noteDTO.toString());
         noteDTO.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+        UserDetails userDetails = SecurityContextHolder.getUserDetails();
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
+        UserDTO user = new UserDTO();
+        user.setId(jwtUser.getId());
+        user.setUsername(jwtUser.getUsername());
+        user.setEmail(jwtUser.getEmail());
+        noteDTO.setUser(user);
         return ResponseEntity.ok(noteService.save(noteDTO));
     }
 
@@ -157,9 +174,10 @@ public class NoteController {
      */
     @GetMapping("/note/{id}/notePraise")
     public ResponseEntity noteePraise(@PathVariable Long id){
-        User user = new User();
-        user.setId(1L);
-        return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.PRAISE,user);
+        UserDetails userDetails = SecurityContextHolder.getUserDetails();
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
+        UserDTO userDTO = userService.findById(jwtUser.getId());
+        return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.PRAISE, userMapper.toEntity(userDTO));
     }
 
     /**
@@ -169,9 +187,10 @@ public class NoteController {
      */
     @GetMapping("/note/{id}/noteTrash")
     public ResponseEntity noteTrash(@PathVariable Long id){
-        User user = new User();
-        user.setId(1L);
-       return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.TRASH,user);
+        UserDetails userDetails = SecurityContextHolder.getUserDetails();
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
+        UserDTO userDTO = userService.findById(jwtUser.getId());
+       return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.TRASH,userMapper.toEntity(userDTO));
     }
 
     /**
@@ -181,9 +200,10 @@ public class NoteController {
      */
     @GetMapping("/note/{id}/noteReadCount")
     public ResponseEntity noteReadCount(@PathVariable Long id){
-        User user = new User();
-        user.setId(1L);
-        return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.READ,user);
+        UserDetails userDetails = SecurityContextHolder.getUserDetails();
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
+        UserDTO userDTO = userService.findById(jwtUser.getId());
+        return noteReadCountAndTrashAndPraise(id, DynamicTypeEnum.READ,userMapper.toEntity(userDTO));
     }
 
 
@@ -204,7 +224,9 @@ public class NoteController {
     private ResponseEntity noteReadCountAndTrashAndPraise(Long id ,DynamicTypeEnum typeEnum,User user){
         NoteDTO noteDTO = noteService.getNoteById(id);
         Note note = noteMapper.toEntity(noteDTO);
+        log.info(note.toString());
         noteDynamic(user,typeEnum.getType(),note);
+        log.info(note.toString());
         Integer integer = dynamicService.countAllByTypeAndNote(typeEnum.getType(),note);
         switch (typeEnum){
             case PRAISE:
