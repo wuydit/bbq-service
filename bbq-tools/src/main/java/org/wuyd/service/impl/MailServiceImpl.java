@@ -14,8 +14,7 @@ import org.wuyd.service.MailService;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 /**
  * @author wuyd
@@ -28,7 +27,7 @@ import java.util.Map;
 public class MailServiceImpl implements MailService {
 
 
-    private String mailSender = "wuydit@163.com";
+    private String mailSender = "wuydit<wuydit@163.com>";
     @Autowired
     JavaMailSender javaMailSender;
     @Override
@@ -37,12 +36,14 @@ public class MailServiceImpl implements MailService {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             //邮件发送人
             simpleMailMessage.setFrom(mailSender);
-            //邮件接收人
-            simpleMailMessage.setTo(mailEntity.getRecipient());
+            simpleMailMessage.setSentDate(new Date());
+            simpleMailMessage.setCc(mailSender);
+            simpleMailMessage.setTo( mailEntity.getRecipient());
             //邮件主题
             simpleMailMessage.setSubject(mailEntity.getSubject());
             //邮件内容
             simpleMailMessage.setText(mailEntity.getContent());
+            log.info(simpleMailMessage.toString());
             javaMailSender.send(simpleMailMessage);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());

@@ -97,9 +97,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //放开email 发送权限
                 .antMatchers( HttpMethod.POST,"/api/email").permitAll()
                 //bbq start
-                .antMatchers( HttpMethod.POST,"/bbq/register").permitAll()
-               // .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
-               // .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
+                .antMatchers( HttpMethod.GET,"/api/user/isUsername/**").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/user/isMail/**").permitAll()
+                .antMatchers( HttpMethod.POST,"/api/register").permitAll()
+
                 .antMatchers( HttpMethod.GET,"/api/provinces").permitAll()
                 .antMatchers( HttpMethod.GET,"/api/schools").permitAll()
                 .antMatchers( HttpMethod.GET,"/api/citys").permitAll()

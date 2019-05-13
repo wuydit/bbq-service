@@ -29,16 +29,6 @@ public class MailController {
     @Autowired
     private MailRepository mailRepository;
 
-    @GetMapping("/mail")
-    public ResponseEntity testMail(){
-        MailEntity mailEntity = new MailEntity();
-        mailEntity.setSubject("邮件测试");
-        mailEntity.setRecipient("1557655749@qq.com");
-        mailEntity.setContent("邮件测试这是Content");
-        mailService.sendSimpleMail(mailEntity);
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping("/mail/code")
     public ResponseEntity code(@Param("mail")String mail){
         try{
@@ -51,9 +41,21 @@ public class MailController {
             email.setCode(code);
             mailRepository.save(email);
             MailEntity mailEntity = new MailEntity();
-            mailEntity.setSubject("验证邮件");
+            mailEntity.setSubject("表白墙邮箱提醒，请不要让它人知道您的CODE");
             mailEntity.setRecipient(mail);
-            mailEntity.setContent("您的验证码是："+code);
+            mailEntity.setContent("尊敬的用户你好，感谢你使用我们的产品。您好,\n" +
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "这是您的 BBQ 账号安全码：：" + code +
+                    "\n如果您并未申请安全码：\n" +
+                    "\n" +
+                    "请更换账号密码，并考虑一并更换电子信箱密码，以保障账号安全。\n" +
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "谢谢。"
+            );
             mailService.sendSimpleMail(mailEntity);
             return ResponseEntity.ok(Response.builder().isSend(Boolean.TRUE).build());
         }catch (Exception e){
