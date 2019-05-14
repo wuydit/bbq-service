@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.wuyd.modules.security.security.JwtUser;
 import org.wuyd.modules.system.domain.PrivateLetters;
 import org.wuyd.modules.system.domain.User;
@@ -95,6 +92,14 @@ public class PrivateLettersController {
             }
         });
         return ResponseEntity.ok(userList);
+    }
+
+    /**
+     *  添加
+     */
+    @PostMapping("setPrivateLetter")
+    public ResponseEntity setPrivateLetters(@RequestBody PrivateLetters privateLetters){
+        return ResponseEntity.ok(privateLettersRepository.save(privateLetters));
     }
 
 }
