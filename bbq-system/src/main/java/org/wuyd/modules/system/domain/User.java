@@ -24,6 +24,7 @@ import java.util.Set;
 @Table(name="user")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class User implements Serializable {
 
     @Id

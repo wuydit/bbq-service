@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.sql.Update;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * @author wuyd
@@ -36,5 +38,13 @@ public class PrivateLetters implements Serializable {
     @JoinColumn(name="to_user_id")
     private User toUser;
 
+    @Column(name = "msg",length = 400)
     private String msg;
+
+    /**
+     * 创建时间
+     */
+    @CreationTimestamp
+    @Column(name = "create_time")
+    private Timestamp createTime;
 }
