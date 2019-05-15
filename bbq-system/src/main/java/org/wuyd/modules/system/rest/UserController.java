@@ -1,6 +1,7 @@
 package org.wuyd.modules.system.rest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.wuyd.aop.log.Log;
 import org.wuyd.domain.Picture;
@@ -276,4 +277,22 @@ public class UserController {
         homeDTO.setNoteContentSize(noteStrSize);
         return ResponseEntity.ok(homeDTO);
     }
+
+    @GetMapping(value = "/admin/users")
+    public ResponseEntity<Page<User>> getUsers(Pageable pageable) {
+        UserDetails userDetails = SecurityContextHolder.getUserDetails();
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(userDetails.getUsername());
+        if(jwtUser.getId() == 1L){
+            return ResponseEntity.ok(userRepository.findAll(pageable));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping(value = "/user/{userId}/enabled/{enabled}")
+    public ResponseEntity getUsers(@PathVariable Long userId,@PathVariable Boolean enabled) {
+        UserDTO userDTO = userService.findById(userId);
+        userDTO.setEnabled(enabled);
+        return ResponseEntity.ok(userRepository.save(userMapper.toEntity(userDTO)));
+    }
+
 }
